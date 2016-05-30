@@ -55,6 +55,18 @@ function handleGeolocateError(){
 function getNearByRestaurants(lat, lng){
     console.log("LAT = "+lat);
     console.log("LNG = "+lng);
+    $.ajax({
+         url: 'query.php?lat='+lat+'&lon='+lng
+         ,dataType : 'json'
+         ,success : ajaxSuccess
+    });
+}
+
+function ajaxSuccess(data){
+    data.forEach(function(restaurant){
+        var pos = new google.maps.LatLng(restaurant.latitude, restaurant.longitude);
+        var marker = new google.maps.Marker({map: map, position: pos});
+    });
 }
 
 window.onload = init;
